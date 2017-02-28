@@ -26,7 +26,7 @@ public class Console {
 		consoleOut.println("------ ----               --------  -----");
 		
 		for (Task task : tasksToPrint) {
-			consoleOut.printf("%1$6d %2$-20s %3$8s %4$5d", 
+			consoleOut.printf("%1$6d %2$-20.20s %3$8.8s %4$5d", 
 					task.getIdentifier(), 
 					task.getDescription(), 
 					task.getPriority(), 
@@ -36,23 +36,23 @@ public class Console {
 	}
 	
 	public void printTasksWithStatus (ArrayList<Task> tasksToPrint) {
-		consoleOut.println("ID     Task               Priority  Order Date     Reason");
-		consoleOut.println("------ ----               --------  ----- -------- ------");
+		consoleOut.println("ID     Task                 Priority Order Status Date     Reason");
+		consoleOut.println("------ ----                 -------- ----- ------ -------- ------");
 		
 		for (Task task : tasksToPrint) {
-			consoleOut.printf("%1$6d %2$-20s %3$8s %4$5d ", 
+			consoleOut.printf("%1$6d %2$-20.20s %3$8.8s %4$5d ", 
 					task.getIdentifier(), 
 					task.getDescription(), 
 					task.getPriority(), 
 					task.getOrder());
 			if (task instanceof CompletedTask) {
 				CompletedTask thisTask = (CompletedTask)task;
-				consoleOut.printf("%1$-6s %2$9tD ", 
+				consoleOut.printf("%1$-6.6s %2$9tD ", 
 						thisTask.STATUS,
 						thisTask.getCompletionDate());
 			} else if (task instanceof CancelledTask) {
 				CancelledTask thisTask = (CancelledTask)task;
-				consoleOut.printf("%1$-6s           %2$-s", 
+				consoleOut.printf("%1$-6.6s           %2$-s", 
 						thisTask.STATUS,
 						thisTask.getCancellationReason());
 			}

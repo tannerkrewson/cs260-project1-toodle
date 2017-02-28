@@ -3,6 +3,7 @@
  */
 package edu.truman.cs260.krewson.toodle;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,24 +41,37 @@ public class ToodleFile {
 				CompletedTask newTask = (CompletedTask)task;
 			    Calendar cal = Calendar.getInstance();
 			    cal.setTime(newTask.getCompletionDate());
-			    fileOut.println(Calendar.YEAR);
-			    fileOut.println(Calendar.MONTH);
-			    fileOut.println(Calendar.DAY_OF_MONTH);
+			    fileOut.println(cal.get(Calendar.YEAR));
+			    fileOut.println(cal.get(Calendar.MONTH));
+			    fileOut.println(cal.get(Calendar.DAY_OF_MONTH));
 			} else if (task instanceof CancelledTask) {
 				CancelledTask newTask = (CancelledTask)task;
 				fileOut.println(newTask.getCancellationReason());
 			}
 		}
+		
+		fileOut.close();
 	}
 	
 	public ArrayList<Task> readTasksFromFile () throws IOException {
-		fileStream = new FileReader("Task_List.txt");
+	    File file = new File("Task_List.txt");
+
+	    if (!file.isFile() && !file.createNewFile())
+	    {
+	        throw new IOException("Could not read from file Task_List.txt");
+	    }
+		fileStream = new FileReader(file);
 		fileIn = new Scanner(fileStream);
 		
 		ArrayList<Task> newTaskList = new ArrayList<Task>();
 		
-		int numberOfTasks = fileIn.nextInt();
-		fileIn.nextLine();
+		int numberOfTasks;
+		try {
+			numberOfTasks = fileIn.nextInt();
+			fileIn.nextLine();
+		} catch (Exception e) {
+			numberOfTasks = 0;
+		}
 		
 		for (int i = 0; i < numberOfTasks; i++) {
 			String status = fileIn.nextLine();
@@ -68,14 +82,13 @@ public class ToodleFile {
 			int order = fileIn.nextInt();
 			fileIn.nextLine();
 			
-			if (status == "Completed") {
+			if (status.equals("Completed")) {
 				int year = fileIn.nextInt();
 				int month = fileIn.nextInt();
 				int day = fileIn.nextInt();
 				Date completionDate = new GregorianCalendar(year, month, day).getTime();
 				newTaskList.add(new CompletedTask(identifier, description, priority, order, completionDate));
-				fileIn.nextLine();
-			} else if (status == "Cancelled") {
+			} else if (status.equals("Cancelled")) {
 				String cancellationReason = fileIn.nextLine();
 				newTaskList.add(new CancelledTask(identifier, description, priority, order, cancellationReason));
 			} else {

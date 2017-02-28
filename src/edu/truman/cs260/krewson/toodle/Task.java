@@ -73,11 +73,11 @@ public class Task {
 	private int getPriorityStrength () {
 		switch (this.getPriority()) {
 			case 'U':
-				return 3;
+				return 1;
 			case 'N':
 				return 2;
 			case 'L':
-				return 1;
+				return 3;
 			default:
 				return 0;
 		}

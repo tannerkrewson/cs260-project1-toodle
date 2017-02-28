@@ -50,7 +50,12 @@ public class TaskList {
 	
 	public int getNextId () {
 		this.sortTasksById();
-		return this.tasks.get(this.tasks.size() - 1).getIdentifier() + 1;
+		if (this.tasks.size() > 0) {
+			return this.tasks.get(this.tasks.size() - 1).getIdentifier() + 1;
+		} else {
+			return 0;
+		}
+		
 	}
 	
 	public int createNewTask(String taskDescription, char priority, int taskOrder) {
@@ -62,7 +67,7 @@ public class TaskList {
 	public ArrayList<Task> getAllIncompleteTasks () {
 		ArrayList<Task> newTaskList = new ArrayList<Task>();
 		for (Task task : this.getAllTasksInOrder()) {
-			if (task.STATUS == "Incomplete") {
+			if (task.STATUS.equals("Incomplete")) {
 				newTaskList.add(task);
 			}
 		}
@@ -72,7 +77,7 @@ public class TaskList {
 	public ArrayList<Task> getAllIncompleteTasksWithPriority (char priority) {
 		ArrayList<Task> newTaskList = new ArrayList<Task>();
 		for (Task task : this.getAllTasksInOrder()) {
-			if (task.STATUS == "Incomplete" && task.getPriority() == priority) {
+			if (task.STATUS.equals("Incomplete") && task.getPriority() == priority) {
 				newTaskList.add(task);
 			}
 		}

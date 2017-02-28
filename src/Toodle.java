@@ -15,7 +15,7 @@ public class Toodle {
 		try {
 			tl = new TaskList(tf.readTasksFromFile());
 		} catch (IOException e) {
-			c.printLine("Could not read from file Task_List.txt");
+			c.printLine(e.getMessage());
 			System.exit(0);
 		}
 		
@@ -38,16 +38,19 @@ public class Toodle {
 				c.printTasks(tl.getAllIncompleteTasksWithPriority(priority));
 				break;
 			case 4:
-				c.printTasks(tl.getAllTasksInOrder());
+				c.printTasksWithStatus(tl.getAllTasksInOrder());
+				break;
 			case 5:
 				int idToComplete = Integer.parseInt(c.promptUserFor("Enter ID of task to mark as completed: "));
 				tl.completeTask(idToComplete);
 				c.printLine("-- Task " + idToComplete + " marked as completed --");
+				break;
 			case 6:
 				int idToCancel = Integer.parseInt(c.promptUserFor("Enter ID of task to cancel: "));
 				String reason = c.promptUserFor("Enter reason for cancellation: ");
 				tl.cancelTask(idToCancel, reason);
 				c.printLine("-- Task " + idToCancel + " cancelled --");
+				break;
 			case 7:
 				c.printLine("Goodbye");
 				try {
