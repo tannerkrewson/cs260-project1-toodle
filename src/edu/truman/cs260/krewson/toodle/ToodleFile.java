@@ -29,6 +29,7 @@ public class ToodleFile {
 		fileOut = new PrintWriter("Task_List.txt");
 		
 		fileOut.println(tasksToWrite.size());
+		fileOut.println();
 		
 		for (Task task : tasksToWrite) {
 			fileOut.println(task.STATUS);
@@ -48,6 +49,9 @@ public class ToodleFile {
 				CancelledTask newTask = (CancelledTask)task;
 				fileOut.println(newTask.getCancellationReason());
 			}
+			
+			//add single line gap between tasks
+			fileOut.println();
 		}
 		
 		fileOut.close();
@@ -68,6 +72,9 @@ public class ToodleFile {
 		int numberOfTasks;
 		try {
 			numberOfTasks = fileIn.nextInt();
+			
+			//move cursor to next line, and skip one
+			fileIn.nextLine();
 			fileIn.nextLine();
 		} catch (Exception e) {
 			numberOfTasks = 0;
@@ -86,6 +93,7 @@ public class ToodleFile {
 				int year = fileIn.nextInt();
 				int month = fileIn.nextInt();
 				int day = fileIn.nextInt();
+				fileIn.nextLine();
 				Date completionDate = new GregorianCalendar(year, month, day).getTime();
 				newTaskList.add(new CompletedTask(identifier, description, priority, order, completionDate));
 			} else if (status.equals("Cancelled")) {
@@ -94,6 +102,13 @@ public class ToodleFile {
 			} else {
 				newTaskList.add(new IncompleteTask(identifier, description, priority, order));
 			}
+			
+			//if its not the last task
+			if (i != numberOfTasks - 1) {
+				//account for single line gap between each task
+				fileIn.nextLine();
+			}
+			
 		}
 		
 		fileIn = null;

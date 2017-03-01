@@ -20,7 +20,15 @@ public class Toodle {
 		}
 		
 		while (true) {
-			int cmd = Integer.parseInt(c.promptUserFor("Please enter a command (1 - 7): "));
+			int cmd = 0;
+			boolean inputValid = false;
+			while (!inputValid) {
+				try {
+					cmd = Integer.parseInt(c.promptUserFor("Please enter a command (1 - 7): "));
+					inputValid = true;
+				} catch (Exception e) {}
+				
+			}
 			
 			switch (cmd) {
 			case 1:
@@ -63,6 +71,7 @@ public class Toodle {
 			default:
 				break;
 			}
+			c.printLine("");
 		}
 
 	}

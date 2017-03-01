@@ -19,7 +19,7 @@ public class CancelledTask extends Task {
 	 * @param cancellationReason
 	 */
 	public CancelledTask(int identifier, String description, char priority, int order, String cancellationReason) {
-		super(identifier, description, priority, order, "Canceled");
+		super(identifier, description, priority, order, "Cancelled");
 		this.cancellationReason = cancellationReason;
 	}
 	
