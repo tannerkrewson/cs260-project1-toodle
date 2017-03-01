@@ -15,16 +15,30 @@ import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 /**
+ * Wraps the file that is used to read in previously stored
+ * data, and to write the information stored in memory once
+ * the program is closed.
  * @author Tanner
  *
  */
 public class ToodleFile {
 
+	/**
+	 * Objects for reading in the file.
+	 */
 	private FileReader fileStream;
 	private Scanner fileIn;
 	
+	/**
+	 * Writes to the text file.
+	 */
 	private PrintWriter fileOut;
 	
+	/**
+	 * Writes the given tasks to the text file.
+	 * @param tasksToWrite the tasks to write to the file.
+	 * @throws FileNotFoundException the text file is not found
+	 */
 	public void writeTasksToFile (ArrayList<Task> tasksToWrite) throws FileNotFoundException {
 		fileOut = new PrintWriter("Task_List.txt");
 		
@@ -57,6 +71,13 @@ public class ToodleFile {
 		fileOut.close();
 	}
 	
+	/**
+	 * Reads the previously written tasks from the text file,
+	 * places them in the correct objects, and returns a list of 
+	 * the tasks that were read in.
+	 * @return the list of tasks read in
+	 * @throws IOException the text file could not be read from
+	 */
 	public ArrayList<Task> readTasksFromFile () throws IOException {
 	    File file = new File("Task_List.txt");
 

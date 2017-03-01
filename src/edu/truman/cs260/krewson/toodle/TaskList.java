@@ -9,18 +9,38 @@ import java.util.Comparator;
 import java.util.Date;
 
 /**
+ * Represents a list of multiple Task objects,
+ * and contains methods to create, discard, and
+ * generally act upon these tasks.
  * @author Tanner
  *
  */
 public class TaskList {
+	
+	/**
+	 * Contains the list of tasks.
+	 */
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 	
+	/**
+	 * Provides an empty list of tasks.
+	 */
 	public TaskList () {}
 	
+	/**
+	 * Provides a new TaskList object containing
+	 * the tasks passed.
+	 * @param tasks the tasks to add to the TaskList object
+	 */
 	public TaskList (ArrayList<Task> tasks) {
 		this.tasks = tasks;
 	}
 	
+	/**
+	 * Cancels the given task, and sets a reason.
+	 * @param idOfTaskToCancel the id of the task to cancel
+	 * @param cancellationReason the reason the task was cancelled
+	 */
 	public void cancelTask (int idOfTaskToCancel, String cancellationReason) {
 		Task taskToCancel = this.getTaskById(idOfTaskToCancel);
 		this.removeTask(taskToCancel);
@@ -32,6 +52,11 @@ public class TaskList {
 				cancellationReason));
 	}
 	
+	/**
+	 * Completed the given task, and sets the completion date to 
+	 * the date in which the methods is called.
+	 * @param idOfTaskToComplete the id of the task to complete
+	 */
 	public void completeTask (int idOfTaskToComplete) {
 		Task taskToComplete = this.getTaskById(idOfTaskToComplete);
 		this.removeTask(taskToComplete);
@@ -43,11 +68,21 @@ public class TaskList {
 				new Date()));
 	}
 	
+	/**
+	 * Gets all of the tasks in this TaskList object in 
+	 * the order of their priority.
+	 * @return a list of tasks in order.
+	 */
 	public ArrayList<Task> getAllTasksInOrder () {
 		this.sortTasksByPriorityOrder();
 		return this.tasks;
 	}
 	
+	/**
+	 * Gets a unique id that can be used to construct
+	 * new tasks.
+	 * @return the new id
+	 */
 	public int getNextId () {
 		this.sortTasksById();
 		if (this.tasks.size() > 0) {
@@ -58,12 +93,25 @@ public class TaskList {
 		
 	}
 	
+	/**
+	 * Creates a new task with the given descriptors,
+	 * and returns its id.
+	 * @param taskDescription the name of the task
+	 * @param priority urgent, normal, or low priority, denoted U, N, or L
+	 * @param taskOrder the priority of the task within the three priority levels
+	 * @return the id of the newly created task
+	 */
 	public int createNewTask(String taskDescription, char priority, int taskOrder) {
 		int newId = this.getNextId();
 		this.addTask(new IncompleteTask(newId, taskDescription, priority, taskOrder));
 		return newId;
 	}
 	
+	/**
+	 * Returns a list of tasks contained in this TaskList
+	 * object that are of the Incomplete type.
+	 * @return a list of incomplete tasks
+	 */
 	public ArrayList<Task> getAllIncompleteTasks () {
 		ArrayList<Task> newTaskList = new ArrayList<Task>();
 		for (Task task : this.getAllTasksInOrder()) {
@@ -74,6 +122,13 @@ public class TaskList {
 		return newTaskList;
 	}
 
+	/**
+	 * Returns a list of tasks contained in this TaskList
+	 * object that are of the Incomplete type and are contained
+	 * within a specified priority, U, N, or L.
+	 * @param priority the priority of the desired tasks
+	 * @return a list of incomplete tasks of the specified priority
+	 */
 	public ArrayList<Task> getAllIncompleteTasksWithPriority (char priority) {
 		ArrayList<Task> newTaskList = new ArrayList<Task>();
 		for (Task task : this.getAllTasksInOrder()) {
@@ -84,14 +139,28 @@ public class TaskList {
 		return newTaskList;
 	}
 	
+	/**
+	 * Adds the given task to this TaskList.
+	 * @param newTask the task to add
+	 */
 	private void addTask(Task newTask) {
 		this.tasks.add(newTask);
 	}
 	
+	/**
+	 * Removed the given task from this TaskList.
+	 * @param taskToRemove the task to remove.
+	 */
 	private void removeTask (Task taskToRemove) {
 		this.tasks.remove(taskToRemove);
 	}
 	
+	/**
+	 * Receives an id, and returns the corresponding
+	 * task with that id.
+	 * @param id the id of the task
+	 * @return the task with the given id
+	 */
 	private Task getTaskById (int id) {
 		for (Task task : tasks) {
 			if (task.getIdentifier() == id) {
@@ -101,6 +170,9 @@ public class TaskList {
 		return null;
 	}
 	
+	/**
+	 * Sorts this TaskList's list of tasks by their ids.
+	 */
 	private void sortTasksById () {
 		Collections.sort(this.tasks, new Comparator<Task>() {
 	        @Override
@@ -111,6 +183,9 @@ public class TaskList {
 	    });
 	}
 	
+	/**
+	 * Sorts this TaskList's list of tasks by their priorities.
+	 */
 	private void sortTasksByPriorityOrder () {
 		Collections.sort(this.tasks, new Comparator<Task>() {
 	        @Override

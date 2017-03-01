@@ -4,8 +4,21 @@ import java.io.IOException;
 
 import edu.truman.cs260.krewson.toodle.*;
 
-public class Toodle {
+/**
+ * This main class reads in the tasks from the file, waits for
+ * user input, and responds to the command issued by the user
+ * appropriately.
+ * @author Tanner
+ *
+ */
+public class KrewsonToodle {
 
+	/**
+	 * The main method of this class executes when the program
+	 * is first launched, and fulfills the intended purpose of
+	 * the program.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		Console c = new Console();
@@ -20,6 +33,8 @@ public class Toodle {
 		}
 		
 		while (true) {
+			
+			//validate the input
 			int cmd = 0;
 			boolean inputValid = false;
 			while (!inputValid) {
@@ -30,6 +45,7 @@ public class Toodle {
 				
 			}
 			
+			//respond to the input
 			switch (cmd) {
 			case 1:
 				String description = c.promptUserFor("Enter task description: ");
