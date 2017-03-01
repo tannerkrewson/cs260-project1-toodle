@@ -175,7 +175,6 @@ public class TaskList {
 	 */
 	private void sortTasksById () {
 		Collections.sort(this.tasks, new Comparator<Task>() {
-	        @Override
 	        public int compare(Task task1, Task task2)
 	        {
 	        	return task1.compareToById(task2);
@@ -188,7 +187,6 @@ public class TaskList {
 	 */
 	private void sortTasksByPriorityOrder () {
 		Collections.sort(this.tasks, new Comparator<Task>() {
-	        @Override
 	        public int compare(Task task1, Task task2)
 	        {
 	        	return task1.compareToByOrder(task2);
